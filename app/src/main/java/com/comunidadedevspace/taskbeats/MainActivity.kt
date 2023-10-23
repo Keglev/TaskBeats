@@ -13,10 +13,6 @@ class MainActivity : AppCompatActivity() {
         val taskList = listOf<Task>(
             Task("Title0", "Desc0"),
             Task("Title1", "Desc1"),
-            Task("Title2", "Desc2"),
-            Task("Title3", "Desc3"),
-            Task("Title4", "Desc4"),
-            Task("Title5", "Desc5"),
         )
 
         // Adapter
