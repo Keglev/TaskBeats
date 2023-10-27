@@ -1,11 +1,23 @@
 package com.comunidadedevspace.taskbeats
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // you will get result here in result.data
+            println("Result")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         rvTasks.adapter = adapter
     }
     private fun openTaskDetailView(task: Task){
-        val intent = Intent(this, TaskDetailActivity::class.java)
-            .apply {
-                putExtra(TaskDetailActivity.TASK_TITLE_EXTRA, task.title)
-            }
+
+        startForResult.launch(intent)
+
+        val intent = TaskDetailActivity.start(this, task)
         startActivity(intent)
     }
 }
